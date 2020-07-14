@@ -12,6 +12,20 @@ class ComicsFlatList extends Component {
   }
 
   fetchData = () => {
+    // const urls = [
+    //   'https://jsonplaceholder.typicode.com/photos?_limit=10',
+    // ];
+    // Promise.all(
+    //   urls.map(url =>
+    //     fetch(url)
+    //       .then(res => res.json())
+    //       .then(res => res.items)
+    //   )
+    // ).then(items => {
+    //   this.setState({
+    //     data: items.items,
+    //   });
+    // });
     fetch('https://jsonplaceholder.typicode.com/photos?_limit=10')
       .then((response) => response.json())
       .then((json) => {
