@@ -1,15 +1,13 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Header from './components/Header';
-// import ComicsFlatList from './components/ComicsFlatList';
-import ComicsList2 from './components/ComicsList2';
+import ComicsFlatList from './components/ComicsFlatList';
 
 const App = () => {
   return (
     <View style={styles.container}>
       <Header />
-      {/* <ComicsFlatList /> */}
-      <ComicsList2 />
+      <ComicsFlatList />
     </View>
   );
 };

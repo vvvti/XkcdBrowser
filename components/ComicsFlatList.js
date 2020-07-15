@@ -1,79 +1,79 @@
 import React, {Component} from 'react';
 import {View, Text, Image, FlatList, StyleSheet} from 'react-native';
 import {List, ListItem} from 'react-native-elements';
+import axios from 'axios';
 
 class ComicsFlatList extends Component {
   state = {
-    data: [],
+    comicsList: [],
+    latestComic: [],
   };
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  fetchData = () => {
-    // const urls = [
-    //   'https://jsonplaceholder.typicode.com/photos?_limit=10',
-    // ];
-    // Promise.all(
-    //   urls.map(url =>
-    //     fetch(url)
-    //       .then(res => res.json())
-    //       .then(res => res.items)
-    //   )
-    // ).then(items => {
-    //   this.setState({
-    //     data: items.items,
-    //   });
-    // });
-    fetch('https://jsonplaceholder.typicode.com/photos?_limit=10')
-      .then((response) => response.json())
-      .then((json) => {
-        this.setState({
-          data: json,
-        });
-      });
-  };
-
-  renderRow = ({item}) => {
-    return (
-      <View style={styles.item}>
-        <Image style={styles.itemImage} />
-        <Text style={styles.itemText}>{item.title}</Text>
-      </View>
-    );
-  };
-
-  render() {
+  fetchComicsList(jsonList) {
     return (
       <FlatList
-        style={styles.container}
-        data={this.state.data}
-        renderItem={this.renderRow}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        data={jsonList}
         keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => {
+          return (
+            <ListItem
+              title={item.num}
+              subtitle={
+                <View>
+                  <Image
+                    source={{uri: `${item.img}`}}
+                    style={styles.comicsImage}
+                    resizeMode="contain"
+                  />
+                </View>
+              }
+              onPress={() => {}}
+            />
+          );
+        }}
       />
     );
+  }
+  async componentDidMount() {
+    const requestOne = await axios.get('https://xkcd.com/info.0.json');
+    const requestTwo = await axios.get('https://xkcd.com/2045/info.0.json');
+    const requestThree = await axios.get('https://xkcd.com/2067/info.0.json');
+
+    axios.all([requestOne, requestTwo, requestThree])
+      .then(([responseOne, responseTwo, responseThree]) => {
+        this.setState(prevState => ({
+          comicsList: (prevState.comicsList = [].concat(responseOne.data, responseTwo.data, responseThree.data)),
+        }));
+      });
+  }
+
+  render() {
+      return (
+         <View>
+             {this.fetchComicsList(this.state.comicsList)}
+         </View> 
+      );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    padding: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
   },
-  item: {
-    borderBottomColor: '#7F9493',
-    borderBottomWidth: 2,
-    marginBottom: 10,
+  separator: {
+    height: 2,
+    backgroundColor: '#7F9493',
   },
-  itemImage: {
-    width: '100%',
-    height: 100,
-    resizeMode: 'cover',
-  },
-  itemText: {
-    fontSize: 14,
-    padding: 5,
-    color: 'black',
+  comicsImage: {
+    margin: 5,
+    alignSelf: 'center',
+    height: 120,
+    width: 300,
   },
 });
 
