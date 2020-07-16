@@ -18,9 +18,9 @@ class ComicsFlatList extends Component {
         renderItem={({item}) => {
           return (
             <ListItem
-              title={item.num}
+              title={item.title}
               subtitle={
-                <View>
+                <View style={styles.comicsContainer}>
                   <Image
                     source={{uri: `${item.img}`}}
                     style={styles.comicsImage}
@@ -36,14 +36,25 @@ class ComicsFlatList extends Component {
     );
   }
   async componentDidMount() {
+    await axios.get('https://xkcd.com/info.0.json').then((response) => {
+      this.setState(prevState => ({
+        latestComic: (prevState.latestComic = [].concat(response.data)),
+      }));
+    });
+    const num = this.state.latestComic[0].num;
     const requestOne = await axios.get('https://xkcd.com/info.0.json');
-    const requestTwo = await axios.get('https://xkcd.com/2045/info.0.json');
-    const requestThree = await axios.get('https://xkcd.com/2067/info.0.json');
+    const requestTwo = await axios.get(`https://xkcd.com/${num - 1}/info.0.json`);
+    const requestThree = await axios.get(`https://xkcd.com/${num - 2}/info.0.json`);
+    const requestFour = await axios.get(`https://xkcd.com/${num - 3}/info.0.json`);
+    const requestFive = await axios.get(`https://xkcd.com/${num - 4}/info.0.json`);
+    const requestSix = await axios.get(`https://xkcd.com/${num - 5}/info.0.json`);
+    const requestSeven = await axios.get(`https://xkcd.com/${num - 6}/info.0.json`);
+    const requestEight = await axios.get(`https://xkcd.com/${num - 7}/info.0.json`);
 
-    axios.all([requestOne, requestTwo, requestThree])
-      .then(([responseOne, responseTwo, responseThree]) => {
+    axios.all([requestOne, requestTwo, requestThree, requestFour, requestFive, requestSix, requestSeven, requestEight])
+      .then(([responseOne, responseTwo, responseThree, responseFour, responseFive, responseSix, responseSeven, responseEight]) => {
         this.setState(prevState => ({
-          comicsList: (prevState.comicsList = [].concat(responseOne.data, responseTwo.data, responseThree.data)),
+          comicsList: (prevState.comicsList = [].concat(responseOne.data, responseTwo.data, responseThree.data, responseFour.data, responseFive.data, responseSix.data, responseSeven.data, responseEight.data)),
         }));
       });
   }
@@ -58,20 +69,16 @@ class ComicsFlatList extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    flex: 1,
-    justifyContent: 'center',
+  comicsContainer: {
+    marginLeft: 25,
+    padding: 15,
     alignItems: 'center',
-    backgroundColor: 'white',
   },
   separator: {
-    height: 2,
+    height: 3,
     backgroundColor: '#7F9493',
   },
   comicsImage: {
-    margin: 5,
-    alignSelf: 'center',
     height: 120,
     width: 300,
   },
