@@ -19,6 +19,7 @@ class ComicsFlatList extends Component {
           return (
             <ListItem
               title={item.title}
+              titleStyle={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}
               subtitle={
                 <View style={styles.comicsContainer}>
                   <Image
