@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, FlatList, StyleSheet, Button} from 'react-native';
+import {View, Text, Image, FlatList, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {List, ListItem} from 'react-native-elements';
 import axios from 'axios';
 
@@ -7,10 +7,6 @@ class ComicsFlatList extends Component {
   state = {
     comicsList: [],
     latestComic: [],
-  };
-
-  onPressHandler = ({props}) => {
-    this.props.navigation.navigate('DetailView');
   };
 
   fetchComicsList(jsonList) {
@@ -35,7 +31,12 @@ class ComicsFlatList extends Component {
                     style={styles.comicsImage}
                     resizeMode="contain"
                   />
-                  <Button title='Comic details' onPress={this.onPressHandler} />
+                  <TouchableOpacity 
+                    onPress={() =>
+                      this.props.navigation.navigate('DetailView', item)
+                    }>
+                    <Text style={styles.details}>COMIC DETAILS -></Text>
+                  </TouchableOpacity>
                 </View>
               }
               onPress={() => {}}
@@ -47,8 +48,8 @@ class ComicsFlatList extends Component {
   }
   async componentDidMount() {
     await axios.get('https://xkcd.com/info.0.json').then((response) => {
-      this.setState(prevState => ({
-        latestComic: (prevState.latestComic = [].concat(response.data)),
+      this.setState((state) => ({
+        latestComic: (state.latestComic = [].concat(response.data)),
       }));
     });
     const num = this.state.latestComic[0].num;
@@ -91,6 +92,12 @@ const styles = StyleSheet.create({
   comicsImage: {
     height: 120,
     width: 300,
+  },
+  details: {
+    fontSize: 18,
+    color: '#14768A',
+    fontWeight: 'bold',
+    marginTop: 5,
   },
 });
 
