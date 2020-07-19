@@ -1,30 +1,17 @@
 import {createStackNavigator} from 'react-navigation-stack';
-import ComicsFlatList from '../components/ComicsFlatList';
+
 import About from '../components/About';
-import ComicDetailView from '../components/ComicDetailView';
 
 const screens = {
-  List: {
-    screen: ComicsFlatList,
-    navigationOptions: {
-      title: 'XKCD Browser',
-    },
-  },
   About: {
     screen: About,
     navigationOptions: {
       title: 'About',
     },
   },
-  DetailView: {
-    screen: ComicDetailView,
-    navigationOptions: {
-      title: 'Comic details',
-    },
-  },
 };
 
-const RoutesStack = createStackNavigator(screens, {
+const AboutStack = createStackNavigator(screens, {
   defaultNavigationOptions: {
     headerTintColor: 'white',
     headerStyle: {
@@ -37,4 +24,4 @@ const RoutesStack = createStackNavigator(screens, {
   },
 });
 
-export default RoutesStack;
+export default AboutStack;

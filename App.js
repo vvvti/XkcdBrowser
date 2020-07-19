@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import Navigator from './routes/routesStack';
+import Navigator from './routes/drawer';
 
 const App = (props) => {
   return (
