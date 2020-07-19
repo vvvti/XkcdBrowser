@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
 
-const Header = () => {
+const Header = ({navigation}) => {
   return (
     <View style={styles.header}>
       <Text style={styles.text}>XKCD</Text>

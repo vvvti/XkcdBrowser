@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import Header from './components/Header';
 import Navigator from './routes/routesStack';
 
-const App = () => {
+const App = (props) => {
   return (
     <View style={styles.container}>
       <Header />

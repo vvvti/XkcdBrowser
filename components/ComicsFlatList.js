@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, FlatList, StyleSheet} from 'react-native';
+import {View, Text, Image, FlatList, StyleSheet, Button} from 'react-native';
 import {List, ListItem} from 'react-native-elements';
 import axios from 'axios';
 
@@ -7,6 +7,10 @@ class ComicsFlatList extends Component {
   state = {
     comicsList: [],
     latestComic: [],
+  };
+
+  onPressHandler = ({props}) => {
+    this.props.navigation.navigate('DetailView');
   };
 
   fetchComicsList(jsonList) {
@@ -19,7 +23,11 @@ class ComicsFlatList extends Component {
           return (
             <ListItem
               title={item.title}
-              titleStyle={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}
+              titleStyle={{
+                alignSelf: 'center',
+                fontSize: 20,
+                fontWeight: 'bold',
+              }}
               subtitle={
                 <View style={styles.comicsContainer}>
                   <Image
@@ -27,6 +35,7 @@ class ComicsFlatList extends Component {
                     style={styles.comicsImage}
                     resizeMode="contain"
                   />
+                  <Button title='Comic details' onPress={this.onPressHandler} />
                 </View>
               }
               onPress={() => {}}
