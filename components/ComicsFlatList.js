@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, FlatList, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {View, Text, Image, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 import {List, ListItem} from 'react-native-elements';
 import axios from 'axios';
 

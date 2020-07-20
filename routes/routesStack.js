@@ -2,12 +2,16 @@ import {createStackNavigator} from 'react-navigation-stack';
 import ComicsFlatList from '../components/ComicsFlatList';
 import About from '../components/About';
 import ComicDetailView from '../components/ComicDetailView';
+import Header from '../components/Header';
+import React from 'react';
 
 const screens = {
   List: {
     screen: ComicsFlatList,
-    navigationOptions: {
-      title: 'XKCD Browser',
+    navigationOptions: ({navigation}) => {
+      return {
+        headerTitle: () => <Header navigation={navigation} />,
+      };
     },
   },
   About: {

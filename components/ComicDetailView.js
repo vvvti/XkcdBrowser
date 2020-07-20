@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
   },
   detailImage: {
     alignSelf: 'center',
-    height: 120,
-    width: 300,
+    height: 160,
+    width: 400,
   },
   alt: {
     fontWeight: 'bold',
