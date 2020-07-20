@@ -4,11 +4,17 @@ import {Icon} from 'react-native-elements';
 
 const Header = ({navigation}) => {
   const openMenuHandler = () => {
-    navigation.openDrawer()
-  }
+    navigation.openDrawer();
+  };
   return (
     <View style={styles.header}>
-      <Icon name='menu' size={28} style={styles.icon} color='white' onPress={openMenuHandler} />
+      <Icon
+        name='menu'
+        size={28}
+        style={styles.icon}
+        color='white'
+        onPress={openMenuHandler}
+      />
       <View>
         <Text style={styles.headerText}>XKCD</Text>
       </View>

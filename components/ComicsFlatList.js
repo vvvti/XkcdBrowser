@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
-import {View, Text, Image, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
-import {List, ListItem} from 'react-native-elements';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import {ListItem} from 'react-native-elements';
 import axios from 'axios';
 
 class ComicsFlatList extends Component {
@@ -19,11 +26,7 @@ class ComicsFlatList extends Component {
           return (
             <ListItem
               title={item.title}
-              titleStyle={{
-                alignSelf: 'center',
-                fontSize: 20,
-                fontWeight: 'bold',
-              }}
+              titleStyle={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}
               subtitle={
                 <View style={styles.comicsContainer}>
                   <Image
@@ -31,11 +34,11 @@ class ComicsFlatList extends Component {
                     style={styles.comicsImage}
                     resizeMode="contain"
                   />
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     onPress={() =>
                       this.props.navigation.navigate('DetailView', item)
                     }>
-                    <Text style={styles.details}>COMIC DETAILS -></Text>
+                    <Text style={styles.details}>CHECK COMIC DETAILS</Text>
                   </TouchableOpacity>
                 </View>
               }
@@ -62,20 +65,46 @@ class ComicsFlatList extends Component {
     const requestSeven = await axios.get(`https://xkcd.com/${num - 6}/info.0.json`);
     const requestEight = await axios.get(`https://xkcd.com/${num - 7}/info.0.json`);
 
-    axios.all([requestOne, requestTwo, requestThree, requestFour, requestFive, requestSix, requestSeven, requestEight])
-      .then(([responseOne, responseTwo, responseThree, responseFour, responseFive, responseSix, responseSeven, responseEight]) => {
-        this.setState(prevState => ({
-          comicsList: (prevState.comicsList = [].concat(responseOne.data, responseTwo.data, responseThree.data, responseFour.data, responseFive.data, responseSix.data, responseSeven.data, responseEight.data)),
-        }));
-      });
+    axios
+      .all([
+        requestOne,
+        requestTwo,
+        requestThree,
+        requestFour,
+        requestFive,
+        requestSix,
+        requestSeven,
+        requestEight,
+      ])
+      .then(
+        ([
+          responseOne,
+          responseTwo,
+          responseThree,
+          responseFour,
+          responseFive,
+          responseSix,
+          responseSeven,
+          responseEight,
+        ]) => {
+          this.setState((state) => ({
+            comicsList: (state.comicsList = [].concat(
+              responseOne.data,
+              responseTwo.data,
+              responseThree.data,
+              responseFour.data,
+              responseFive.data,
+              responseSix.data,
+              responseSeven.data,
+              responseEight.data,
+            )),
+          }));
+        },
+      );
   }
 
   render() {
-      return (
-         <View>
-             {this.fetchComicsList(this.state.comicsList)}
-         </View> 
-      );
+    return <View>{this.fetchComicsList(this.state.comicsList)}</View>;
   }
 }
 
